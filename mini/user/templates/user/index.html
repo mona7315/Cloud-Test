@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+{% csrf_token %}
+{% block title %}
+  <title>E-Booking</title>
+{% endblock title %}
+{% block content %}
+{% load static %}
+
+ <br>
+<br>
+<center><h2>ข้อมูลห้อง</h2></center>
+
+    <div class="container">
+      <div class="row">
+
+        <form class="form-inline md-form form-sm mt-0 m-3 " method="POST" action="{% url 'index' %}">
+        {% csrf_token %}
+            <div class="md-form active-pink active-pink-2 mb-3 mt-0 m-2">
+                <input class="form-control" type="text" placeholder="ค้นหาห้องว่าง" name="search" >
+                
+            </div>
+            <div class="md-form active-pink active-pink-2 mb-3 mt-0 m-2">
+            ค้นหาวันว่าง
+              <input class="form-control" name="day" type="date">
+            </div>
+            <div class="md-form active-pink active-pink-2 mb-3 mt-0 m-2">
+              ค้นหาเวลา
+              <input class="form-control" name="time" type="time">
+              <button type="submit" class="btn btn-info" >ค้นหา</button></a>
+            </div>
+            {% if perms.user.add_room  %}
+            <div class="md-form active-pink active-pink-2 mb-3 mt-0 m-2">
+            <a href="{% url 'add'  %}"><button type="button" class="btn btn-danger" >เพิ่ม</button></a>
+            {% endif %}
+             
+            </div>
+            
+        </form>
+      </div>  
+    </div>
+
+
+     <center>
+    <div style="width: 75%">
+    <table class="table table-hover shadow">
+        <thead>
+          <tr>
+            <th scope="col">ชื่อห้อง</th>
+            <th scope="col">เวลาเปิด</th>
+            <th scope="col">เวลาปิด</th>
+            <th scope="col">ความจุ</th>
+
+          </tr>
+        </thead>
+        <tbody> 
+        {% for rm in all_room %}
+          <tr>
+            <td>{{rm.name}}</td>
+            <td>{{rm.open_time}}</td>
+            <td>{{rm.close_time}}</td>
+            <td>{{rm.capacity}}</td>
+            {% if perms.user.change_room %}
+            <td>
+            <a href="{% url 'edit' rm.room_id %}"><button type="submit" class="btn btn-danger">แก้ไข</button></a>
+            {% endif %}
+            {% if perms.user.delete_room %}
+            <a href="{% url 'delete' rm.room_id %}"><button type="submit" class="btn btn-danger">ลบ</button></a>
+            </td>
+            {% endif %}
+            {% comment %} {% if user.is_authenticated %} {% endcomment %}
+              {% if perms.user.add_booking %}
+            <td>
+            <a href="{% url 'booking' rm.room_id %}"><button type="submit" class="btn btn-info">จอง</button></a>
+            </td>
+            {% endif %}
+            {% comment %} {% endif %} {% endcomment %}
+          </tr>
+        {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    </center>
+
+
+{% endblock content %}

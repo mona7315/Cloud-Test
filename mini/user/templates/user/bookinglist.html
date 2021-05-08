@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+ {% block title %}
+<title>BookingList</title>
+{% endblock title %}
+{% block content %}
+<br>
+<br>
+<center><h2>รายการคำร้อง</h2></center>
+<br>
+    <center>
+    <div style="width: 80%">
+    <table class="table table-hover shadow">
+        <thead>
+          <tr>
+            <th scope="col">ชื่อห้อง</th>
+            <th scope="col">วันที่ขอจอง</th>
+            <th scope="col">เวลาที่ขอจอง</th>
+            <th scope="col">เวลาเปิด/ปิดห้อง</th>
+            <th scope="col">สถานะ</th>
+          </tr>
+        </thead>
+        <tbody> 
+        <a href="{% url 'bookinglist' %}">
+        {% csrf_token %}
+         {% for bk in all_book %}
+            {% if perms.user.add_room %}
+              <tr>
+                <td>{{bk.room_id.name}}</td>
+                <td>{{bk.book_date}}</td>
+                <td>{{bk.start_time}} - {{bk.end_time}}</td>
+                <td>{{bk.room_id.open_time}} - {{bk.room_id.close_time}}</td>
+                  {% if bk.status == False%}
+                    <td><label class="text-danger">รอการอนุมัติ </label>
+                    <a href="{% url 'accept' bk.book_id %}"><button type="submit" class="btn btn-danger">อนุมัติ</button></td></a>
+                  {%else%}
+                    <td><label class="text-success">อนุมัติแล้ว </label></td>
+          </tr>
+          {%endif%}
+          {%endif%}
+            {% if perms.user.view_booking %}
+              {% if bk.book_by.id == user_id %}
+                <tr>
+                  <td>{{bk.room_id.name}}</td>
+                  <td>{{bk.book_date}}</td>
+                  <td>{{bk.start_time}} - {{bk.end_time}}</td>
+                  <td>{{bk.room_id.open_time}} - {{bk.room_id.close_time}}</td>
+                {% if bk.status == False%}
+                  <td><label class="text-danger">รอการอนุมัติ </label>
+                  
+                {%else%}
+                  <td><label class="text-success">อนุมัติแล้ว </label></td>
+                {%endif%}
+          </tr>
+            {%endif%}
+          {%endif%}
+        {% endfor %} 
+        </a>
+        </tbody>
+      </table>
+    </div>
+    </center>
+{% endblock content %}

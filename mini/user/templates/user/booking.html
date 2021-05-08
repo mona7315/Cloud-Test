@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+ {% block title %}
+<title>Booking</title>
+{% endblock title %}
+{% block content %}
+<br><br>
+<div class="container">
+    <div class="row">
+        <div class="col-12 ">
+        <form method="POST" action="{% url 'booking' room.room_id %}">
+            {% csrf_token %}
+             {% if error %}
+              <div class="alert alert-danger" role="alert">
+                <strong>Oh snap!</strong> {{error}}
+               </div>
+            {% endif %} 
+            <h1> ชื่อห้อง : {{room.name}} </h1>
+        </div>
+        <div></div>
+        <div class="col-4  p-3" >
+            <div class="container">
+                <div class="bg-light p-2 shadow" >
+                    <h2> รายละเอียด </h2>
+                    <p>ความจุ : {{room.capacity}}</p>
+                    <p>เวลาเปิด : {{room.open_time}}</p>
+                    <p>เวลาปิด : {{room.close_time}}</p>
+                </div>
+            </div> 
+        </div>
+        <div class="col-8 p-3 ">
+            <div class="bg-light p-3 shadow" >
+            
+                <h2> ขอจองห้อง {{room.name}} </h2>
+                <p> วันที่จอง <input type="date" id="date" name="date" required="required"> <p> 
+                <p> ตั้งแต่เวลา<input class="form-control" type="time" name="st_time" required="required"><p>
+                <p> ถึงเวลา<input class="form-control" type="time" name="ed_time" required="required"><p>
+                <p><div class="form-group"><label for="exampleFormControlTextarea1">เหตุผลการใช้งาน</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"  name="reason" required="required"></textarea>
+                    </div>
+                </p>
+                <button type="submit" class="btn btn-info">ยืนยัน</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

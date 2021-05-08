@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+ {% block title %}
+<title>Add Room</title>
+{% endblock title %}
+{% block content %}
+<br><br>
+
+<div class="container">
+ {% if error %}
+        <div class="alert alert-danger" role="alert">
+        <strong>Oh snap!</strong> {{error}}
+        </div>
+        {% endif %}
+    <div class="row">
+        
+       
+        <div></div>
+       
+        <div class="col-8 p-3 ">
+            <div class="bg-light p-3 shadow" >
+                <h2> เพิ่มห้อง </h2>
+                <p> ชื่อห้อง 
+                    <form method="POST" action="{% url 'add'%}">
+                    {% csrf_token %}
+                        <input type="text" id="name" name="name" required="required">
+                       </p> 
+                <p> เวลาเปิด
+                    <input class="form-control" type="time" name="st_time" required="required">
+                </p>
+                    <p> เวลาปิด
+                        <input class="form-control" type="time" name="ed_time" required="required">
+                    <p>
+                </p>
+                    <div class="form-group">
+                        <p> ความจุ
+                        <input class="form-control" type="text" name="cap" required="required">
+                    </p>
+                
+                      </div>
+                </p>
+                <button type="submit" class="btn btn-info">ยืนยัน</button>
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+{% endblock content %}

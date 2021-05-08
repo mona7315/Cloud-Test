@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+ {% block title %}
+<title>Accept Booking</title>
+{% endblock title %}
+{% block content %}
+<br><br>
+<div class="container">
+    <div class="row">
+        <div class="col-12 ">
+        <form method="POST" action="{% url 'accept' room_id %}">
+        {% csrf_token %}
+            <h1> ชื่อห้อง : {{room.name}} </h1>
+        </div>
+        
+        <div></div>
+        <div class="col-4  p-3" >
+            <div class="container">
+                <div class="bg-light p-2 shadow" >
+                    <h2> รายละเอียด </h2>
+                    <p>ความจุ : {{room.capacity}}</p>
+                    <p>เวลาเปิด : {{room.open_time}}</p>
+                    <p>เวลาปิด : {{room.close_time}}</p>
+                </div>
+            </div> 
+        </div>
+        <div class="col-8 p-3 ">
+            <div class="bg-light p-3 shadow" >
+                <h2> ขอจองห้อง {{room.name}} </h2>
+                <p> <h5> ผู้จอง 
+                        <label name="book">  {{book.book_by.first_name}}  {{book.book_by.last_name}} </label>
+                        </h5>
+                    เมื่อ 
+                        <label name="book">  {{book.date}} </label>
+                       </p> 
+                <p> <b>ตั้งแต่เวลา </b>
+                    <label name="sttime"> {{book.start_time}} </label>
+                </p>
+                    <p><b> ถึงเวลา </b>
+                        <label name="edtime"> {{book.end_time}} </label>
+                    </p>
+                    <p><b> วันที่ขอจอง </b>
+                        <label name="date"> {{book.book_date}} </label>
+                    </p>
+                <p><b> เหตุผลในการจองห้อง</b>
+                        <label name="bookdate"> {{book.description}} </label>
+                    </p>
+                    <p>
+                    <label for="exampleFormControlTextarea1">ระบุเหตุผลการอนุมัติ/ ไม่อนุมัติ</label>
+                         <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"  name="reason" required="required"></textarea> 
+                    </p>
+                    <button type="submit" class="btn btn-info">อนุมัติ</button>
+                {% comment %} <button type="submit" class="btn btn-info">ไม่อนุมัติ</button> {% endcomment %}
+                </form>
+            </div>
+        </div>
+
+
+    </div>
+
+</div>
+{% endblock content %}
