@@ -27,9 +27,9 @@ SECRET_KEY = 'r&gv$d_i*+5gi^=zgr+2p6+9pakp-8w6txma+a_1l2!2dc-uae'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['198.211.99.20', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = ['18.136.208.124', 'localhost', '127.0.0.1']
 
-
+  
 # Application definition
 
 INSTALLED_APPS = [
